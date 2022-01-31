@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import s from "./container.module.scss";
 import "../helpers/date";
 import { calcWindowSizes, calcVmin, convertRemToPixels } from "../helpers/size";
-import { monthsAbbrev, today, initMonths, isToday, calcActivedays } from "../helpers/time";
+import { monthsAbbrev, today, initMonths, isToday, calcActivedays, calculatePercent } from "../helpers/time";
 import Circle from "./circle";
 import YearProgress from "./year-progress";
 
@@ -105,10 +105,7 @@ const Container = () => {
                     )}
                 </div>
             </div>
-            <YearProgress
-                progress={activeDayCount / (today.isLeapYear() ? 366 : 365)}
-                yearPercentage={freeScroll ? today.getDOY() / (today.isLeapYear() ? 366 : 365) : 0}
-            />
+            <YearProgress progress={calculatePercent(activeDayCount)} yearPercentage={calculatePercent(today.getDOY())} />
         </>
     );
 };

@@ -6,13 +6,13 @@ const YearProgress = ({ yearPercentage, progress }) => {
 
             <div
                 style={{
-                    top: yearPercentage * 100 + "%",
+                    top: yearPercentage + "%",
                     visibility: yearPercentage ? "" : "hidden",
                 }}
                 className={s.line}
             ></div>
 
-            <div className={s.progress} style={{ height: progress * 100 + "%" }}></div>
+            <div className={s.progress} style={{ height: progress + "%" }}></div>
         </div>
     );
 };

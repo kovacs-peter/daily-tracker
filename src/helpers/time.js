@@ -34,3 +34,4 @@ export const calcActivedays = () => {
     });
     return actives;
 };
+export const calculatePercent = (val) => Math.ceil((val / (today.isLeapYear() ? 366 : 365)) * 100);
