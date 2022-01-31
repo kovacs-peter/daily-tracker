@@ -2,6 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import s from "./circle.module.scss";
 import { getActiveDays, setLocalStorage } from "../helpers/storage";
 
+const getIconElements = () => {
+    return [document.getElementById("favicon"), document.getElementById("appleIcon")];
+};
+
 const Circle = ({
     children,
     today,
@@ -39,6 +43,17 @@ const Circle = ({
             );
         }
     }, [alreadyActive]);
+
+    useEffect(() => {
+        const [fav, appl] = getIconElements();
+        if (today && active) {
+            fav.href = "favicon_alternate.ico";
+            appl.href = "logo192_alternate.png";
+        } else {
+            fav.href = "favicon.ico";
+            appl.href = "logo192.png";
+        }
+    }, [today, active]);
 
     const calculateMiddle = (element) => {
         const box = element.getBoundingClientRect();
