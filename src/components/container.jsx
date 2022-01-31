@@ -7,7 +7,7 @@ import Circle from "./circle";
 import YearProgress from "./year-progress";
 
 const initSizes = calcWindowSizes();
-const alreadyActive = calcActivedays()[today.getMonth()][today.getDate() - 1];
+const alreadyActive = calcActivedays()?.[today.getMonth()]?.[today.getDate() - 1];
 const Container = () => {
     const [initState, setInitState] = useState(!alreadyActive);
     const [freeScroll, setFreeScroll] = useState(false);

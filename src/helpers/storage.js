@@ -1,10 +1,6 @@
-export const getActiveDays = (buildEmpty = false) => {
+export const getActiveDays = () => {
     const localStorageData = JSON.parse(localStorage.getItem("activeDays"));
-    if (buildEmpty)
-        return (
-            localStorageData || [[], [], [], [], [], [], [], [], [], [], [], []]
-        );
-    return localStorageData;
+    return localStorageData || [[], [], [], [], [], [], [], [], [], [], [], []];
 };
 
 export const setLocalStorage = (data) => {
