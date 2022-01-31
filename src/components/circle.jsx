@@ -2,27 +2,16 @@ import { useEffect, useState, useRef } from "react";
 import s from "./circle.module.scss";
 import { getActiveDays, setLocalStorage } from "../helpers/storage";
 
-const Circle = ({
-    children,
-    today,
-    onClick,
-    onCenterChange,
-    windowSizes,
-    initState,
-    alreadyActive,
-    dayIndex,
-    monthIndex,
-}) => {
-    console.log(alreadyActive);
+const Circle = ({ children, today, onClick, onCenterChange, windowResized, initState, alreadyActive, dayIndex, monthIndex }) => {
     const circleRef = useRef();
     const [active, setActive] = useState(!!alreadyActive);
 
     useEffect(() => {
-        if (!circleRef.current || !today) return;
+        if (!circleRef.current || !today || !initState) return;
 
         const position = calculateMiddle(circleRef.current);
         onCenterChange(position);
-    }, [windowSizes, circleRef]);
+    }, [windowResized, circleRef]);
 
     useEffect(() => {
         // shows and hides the date
@@ -44,11 +33,15 @@ const Circle = ({
         return { x: xCenter, y: yCenter };
     };
 
-    const setCircleColor = (colorString) =>
-        (circleRef.current.style.color = colorString);
+    const setCircleColor = (colorString) => (circleRef.current.style.color = colorString);
 
     const handleClick = () => {
-        if (today) setCircleColor("white");
+        if (today) {
+            setCircleColor("white");
+            setTimeout(() => {
+                setCircleColor("");
+            }, 2000);
+        }
         let activeDays = getActiveDays(true);
 
         //add or remove todays index
@@ -69,10 +62,9 @@ const Circle = ({
             onClick={handleClick}
             className={[
                 s.circle,
-                today && s.today,
                 active && s.active,
                 initState && !today && s.hidden,
-                dayIndex === 0 ? s.firstOf : s.transparent,
+                dayIndex === 0 ? s.firstOf : !active && s.transparent,
             ].join(" ")}
         >
             {today && initState ? "" : children}

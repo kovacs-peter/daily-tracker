@@ -25,7 +25,7 @@
         transition: top 2s ease-in-out;
 
         top: 0;
-        left: -0.5rem;
+        left: calc(-0.5rem + 0px);
         border-bottom: 2px red solid;
     }
     .progress {

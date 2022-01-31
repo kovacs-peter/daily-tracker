@@ -1,6 +1,5 @@
 import s from "./year-progress.module.scss";
 const YearProgress = ({ yearPercentage, progress }) => {
-    console.log(progress);
     return (
         <div className={s.year}>
             <span className={s.text}>THIS YEAR</span>
@@ -13,10 +12,7 @@ const YearProgress = ({ yearPercentage, progress }) => {
                 className={s.line}
             ></div>
 
-            <div
-                className={s.progress}
-                style={{ height: progress * 100 + "%" }}
-            ></div>
+            <div className={s.progress} style={{ height: progress * 100 + "%" }}></div>
         </div>
     );
 };

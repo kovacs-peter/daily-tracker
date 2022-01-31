@@ -2,46 +2,45 @@
     font-size: 0.8rem;
     width: 3rem;
     height: 3rem;
-    padding: 1px;
     cursor: pointer;
-    transition: opacity 1s ease-in-out 2s, background-color 0.7s ease,
-        color 1s ease 0.5s;
     aspect-ratio: 1/1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     border: 2px solid black;
     border-radius: 50%;
 
-    &.active {
-        background-color: black;
-        &.firstOf {
-            color: white;
-        }
-        &:hover {
-            transition: opacity 1s ease-in-out 2s, background-color 0.7s ease,
-                color 0.5s ease;
-            color: white;
-        }
-    }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    &.hidden {
-        visibility: hidden;
-        opacity: 0;
-    }
-    &.today {
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-    }
+    transition: opacity 1s ease-in-out 2s, background-color 0.7s ease, color 1s ease 0.5s;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+#today {
+    // turn on antialiasing
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.firstOf {
+    color: black;
+}
+
+.active {
+    background-color: black;
     &.firstOf {
-        color: black;
+        color: white;
+    }
+    &:hover {
+        transition: opacity 1s ease-in-out 2s, background-color 0.7s ease, color 0.5s ease;
+        color: white;
     }
 }
 .transparent {
     color: transparent;
     &:hover {
-        transition: opacity 1s ease-in-out 2s, background-color 0.7s ease,
-            color 0.5s ease;
+        transition: opacity 1s ease-in-out 2s, background-color 0.7s ease, color 0.5s ease;
 
         color: black;
     }
