@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from "react";
-import s from "../styles/Home3.module.scss";
+import s from "./container.module.scss";
 import "../helpers/date";
-import Circle from "./circle2";
-import YearProgress from "./yearProgress";
+import Circle from "./circle";
+import YearProgress from "./year-progress";
 
 const monthAbbrev = [
     "jan",

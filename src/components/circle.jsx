@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import s from "../styles/Home3.module.scss";
+import s from "./circle.module.scss";
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }

@@ -1,4 +1,4 @@
-import s from "../styles/Home3.module.scss";
+import s from "./year-progress.module.scss";
 const YearProgress = ({ yearPercentage, progress }) => {
     console.log(progress);
     return (
