@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
-import s from "./container.module.scss";
+import { getActiveDays } from "../helpers/storage";
 import "../helpers/date";
+import s from "./container.module.scss";
 import Circle from "./circle";
 import YearProgress from "./year-progress";
 
@@ -104,7 +105,7 @@ const Container = () => {
         let delay = 1;
 
         let actives = {};
-        const initActive = JSON.parse(localStorage.getItem("activeDays"));
+        const initActive = getActiveDays();
         initActive.forEach((month, monthIndex) => {
             month.forEach((day) => {
                 actives = {
@@ -114,7 +115,7 @@ const Container = () => {
                         [day]: delay,
                     },
                 };
-                delay += 20;
+                delay += 50;
             });
         });
         setActiveDays(actives);
