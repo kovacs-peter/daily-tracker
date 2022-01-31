@@ -2,14 +2,14 @@ import { useRef, useState, useEffect } from "react";
 import s from "./container.module.scss";
 import "../helpers/date";
 import { calcWindowSizes, calcVmin, convertRemToPixels } from "../helpers/size";
-import { monthsAbbrev, today, initMonths, isToday, calcActivedays, calculatePercent } from "../helpers/time";
+import { monthsAbbrev, today, initMonths, isToday, calcActivedays, calculatePercent, currentDate } from "../helpers/time";
 import Circle from "./circle";
 import YearProgress from "./year-progress";
 
 const initSizes = calcWindowSizes();
-
+const alreadyActive = calcActivedays()[today.getMonth()][today.getDate() - 1];
 const Container = () => {
-    const [initState, setInitState] = useState(true);
+    const [initState, setInitState] = useState(!alreadyActive);
     const [freeScroll, setFreeScroll] = useState(false);
     const [currentTransform, setCurrentTransform] = useState({ x: 0, y: 0 });
     const [windowSizes, setWindowSizes] = useState(calcWindowSizes());
@@ -19,6 +19,10 @@ const Container = () => {
     const containerRef = useRef(null);
 
     useEffect(() => {
+        if (alreadyActive) {
+            setActiveDays(calcActivedays());
+            setFreeScroll(true);
+        }
         const handleResize = () => setWindowSizes(calcWindowSizes());
         window.addEventListener("resize", handleResize);
         return () => {
@@ -60,12 +64,13 @@ const Container = () => {
     }, [todayPos, containerRef, initState]);
 
     const handleClick = () => {
-        setActiveDays(calcActivedays());
         if (!initState) return;
-        containerRef.current.style.transition = `transform 1.5s ease-in-out`;
-        const scale = calcVmin(windowSizes.x, windowSizes.y, 80) / convertRemToPixels(3);
-        containerRef.current.style.transform = `scale(${scale}) translate(${currentTransform.x}px, ${currentTransform.y}px)`;
+        setActiveDays(calcActivedays());
 
+        const scale = calcVmin(windowSizes.x, windowSizes.y, 80) / convertRemToPixels(3);
+
+        containerRef.current.style.transition = `transform 1.5s ease-in-out`;
+        containerRef.current.style.transform = `scale(${scale}) translate(${currentTransform.x}px, ${currentTransform.y}px)`;
         setTimeout(() => {
             containerRef.current.style.transform = ``;
             setFreeScroll(true);
@@ -97,6 +102,7 @@ const Container = () => {
                                 monthIndex={monthIndex}
                                 dayIndex={dayIndex}
                                 initState={initState}
+                                freeScroll={freeScroll}
                                 alreadyActive={activeDays?.[monthIndex]?.[dayIndex]}
                             >
                                 {dayIndex === 0 ? monthsAbbrev[monthIndex] : dayIndex + 1}
@@ -105,7 +111,10 @@ const Container = () => {
                     )}
                 </div>
             </div>
-            <YearProgress progress={calculatePercent(activeDayCount)} yearPercentage={calculatePercent(today.getDOY())} />
+            <YearProgress
+                progress={calculatePercent(activeDayCount)}
+                yearPercentage={freeScroll ? calculatePercent(today.getDOY()) : 0}
+            />
         </>
     );
 };

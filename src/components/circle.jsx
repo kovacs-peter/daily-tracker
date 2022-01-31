@@ -2,7 +2,18 @@ import { useEffect, useState, useRef } from "react";
 import s from "./circle.module.scss";
 import { getActiveDays, setLocalStorage } from "../helpers/storage";
 
-const Circle = ({ children, today, onClick, onCenterChange, windowResized, initState, alreadyActive, dayIndex, monthIndex }) => {
+const Circle = ({
+    children,
+    today,
+    onClick,
+    onCenterChange,
+    windowResized,
+    initState,
+    alreadyActive,
+    dayIndex,
+    monthIndex,
+    freeScroll,
+}) => {
     const circleRef = useRef();
     const [active, setActive] = useState(!!alreadyActive);
 
@@ -16,13 +27,16 @@ const Circle = ({ children, today, onClick, onCenterChange, windowResized, initS
     useEffect(() => {
         // shows and hides the date
         if (alreadyActive) {
-            setTimeout(() => {
-                setActive(true);
-                setCircleColor("white");
-                setTimeout(() => {
-                    setCircleColor("");
-                }, 1000);
-            }, alreadyActive + 2000);
+            setTimeout(
+                () => {
+                    setActive(true);
+                    setCircleColor("white");
+                    setTimeout(() => {
+                        setCircleColor("");
+                    }, 1000);
+                },
+                alreadyActive + freeScroll ? 200 : 2000
+            );
         }
     }, [alreadyActive]);
 
